@@ -10,10 +10,12 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import SignIn from "./Components/SignIn";
 
 function App () {
   const [alert, setAlert] = useState(null);
-  const mode = 'indigo';
+  const mode = 'blue';
+  const alertDelay = 3;
 
   const showAlert = (message, type) => {
     setAlert({
@@ -22,12 +24,12 @@ function App () {
     });
     setTimeout(() => {
       setAlert(null);
-    }, 1500);
+    }, alertDelay * 1000);
   };
 
   return (
     <Router>
-      <Navbar mode={ mode } title='Demo Title' />
+      <Navbar mode={ mode } title='cNotebook' />
       <Alert alert={ alert } />
       <Switch>
         <Route exact path='/'>
@@ -35,6 +37,9 @@ function App () {
         </Route>
         <Route exact path='/about'>
           <About showAlert={ showAlert } />
+        </Route>
+        <Route exact path='/signin'>
+          <SignIn showAlert={ showAlert } />
         </Route>
       </Switch>
       <Footer mode={ mode } />

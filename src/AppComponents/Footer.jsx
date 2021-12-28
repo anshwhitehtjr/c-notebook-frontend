@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = ({ mode }) => {
     return (
-        <footer className={ `bg-${ mode }-200 pt-8 pb-6` }>
+        <footer className={ `bg-${ mode }-200 pt-8 pb-6 mt-10` }>
             <div className="container mx-auto px-4">
                 <div className="flex flex-wrap items-center md:justify-between justify-center">
                     <div className="w-full md:w-4/12 px-4 mx-auto text-center">
