@@ -37,8 +37,46 @@ const AppState = props => {
         setNotes(notes.concat(note));
     };
 
+    // Edit a Note
+    const editNote = async (id, title, desc, tag) => {
+        // API Call 
+        const response = await fetch(`${ host }/api/notes/updatenote/${ id }`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem('token')
+            },
+            body: JSON.stringify({ title, desc, tag })
+        });
+        let newNotes = JSON.parse(JSON.stringify(notes));
+        for (let index = 0; index < newNotes.length; index++) {
+            const element = newNotes[index];
+            if (element._id === id) {
+                newNotes[index].title = title;
+                newNotes[index].desc = desc;
+                newNotes[index].tag = tag;
+                break;
+            }
+        }
+        setNotes(newNotes);
+    };
+
+    // Delete a Note
+    const deleteNote = async id => {
+        // API Call
+        const response = await fetch(`${ host }/api/notes/deletenote/${ id }`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem('token')
+            }
+        });
+        const newNotes = notes.filter(note => { return note._id !== id; });
+        setNotes(newNotes);
+    };
+
     return (
-        <appContext.Provider value={ { getNotes, notes, addNote } } >
+        <appContext.Provider value={ { getNotes, notes, addNote, editNote, deleteNote } } >
             { props.children }
         </appContext.Provider>
     );

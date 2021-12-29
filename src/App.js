@@ -13,11 +13,12 @@ import {
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import AppState from "./Context/AppState";
+import NotFound from "./AppComponents/NotFound";
 
 function App () {
   const [alert, setAlert] = useState(null);
   const mode = 'blue';
-  const alertDelay = 3;
+  const alertDelay = 5;
 
   const showAlert = (message, type) => {
     setAlert({
@@ -46,6 +47,9 @@ function App () {
           </Route>
           <Route exact path='/signup'>
             <SignUp showAlert={ showAlert } />
+          </Route>
+          <Route exact path='*'>
+            <NotFound showAlert={ showAlert } />
           </Route>
         </Switch>
         <Footer mode={ mode } />

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const About = () => {
+const About = ({ showAlert }) => {
+    useEffect(() => {
+        showAlert("Sorry this page of this website is under contruction. Kindly wait till this page is constructed to use its features", "blue");
+    }, []);
+
     return (
         <div className='max-w-7xl mx-auto py-6 sm:px-6 lg:px-8'>
-            <h1>About Works</h1>
+            <center>Sorry Under Contruction</center>
         </div>
     );
 };

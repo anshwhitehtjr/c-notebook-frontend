@@ -2,7 +2,8 @@
     .signimg {
         display: none;
     }
-    .signbox{
+
+    .signbox {
         justify-content: center;
     }
 }

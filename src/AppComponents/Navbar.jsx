@@ -2,10 +2,17 @@
 import { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon, } from '@heroicons/react/outline';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 
 export default function Navbar ({ mode, title }) {
     let location = useLocation();
+    let history = useHistory();
+
+    const handleLogout = e => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        history.push('/signin');
+    };
 
     return (
         <Popover className="relative bg-white" style={ { zIndex: '1' } }>
@@ -45,15 +52,23 @@ export default function Navbar ({ mode, title }) {
                         }
                     </Popover.Group>
                     <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0 space-x-5">
-                        <Link to="/signin" className={ `text-base font-medium text-${ mode }-500 bg-${ mode }-700 text-white px-3 py-2 rounded-md text-sm font-medium` }>
-                            Sign in
-                        </Link>
-                        <Link
-                            to="/signup"
-                            className={ `text-base font-medium text-${ mode }-500 bg-${ mode }-700 text-white px-3 py-2 rounded-md text-sm font-medium` }
-                        >
-                            Sign up
-                        </Link>
+                        {
+                            localStorage.getItem('token')
+                                ? <Link to="/signin" onClick={ handleLogout } className={ `text-base font-medium text-${ mode }-500 bg-${ mode }-700 text-white px-3 py-2 rounded-md text-sm font-medium` }>
+                                    Logout
+                                </Link>
+                                : <>
+                                    <Link to="/signin" className={ `text-base font-medium text-${ mode }-500 bg-${ mode }-700 text-white px-3 py-2 rounded-md text-sm font-medium` }>
+                                        Sign in
+                                    </Link>
+                                    <Link
+                                        to="/signup"
+                                        className={ `text-base font-medium text-${ mode }-500 bg-${ mode }-700 text-white px-3 py-2 rounded-md text-sm font-medium` }
+                                    >
+                                        Sign up
+                                    </Link>
+                                </>
+                        }
                     </div>
                 </div>
             </div>
@@ -105,13 +120,18 @@ export default function Navbar ({ mode, title }) {
                             </div>
                             <div className='mt-6 text-center text-base font-medium text-gray-500'>
                                 {
-                                    location.pathname === '/signup'
-                                        ? <Link to="/signup" className={ `text-base font-medium bg-${ mode }-700 text-white px-3 py-2 rounded-md text-sm font-medium` }>
-                                            Signup
+                                    localStorage.getItem('token')
+                                        ? <Link to="/signin" onClick={ handleLogout } className={ `text-base font-medium text-${ mode }-500 bg-${ mode }-700 text-white px-3 py-2 rounded-md text-sm font-medium` }>
+                                            Logout
                                         </Link>
-                                        : <Link to="/signup" className={ `text-base font-medium text-${ mode }-500 hover:bg-${ mode }-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium` }>
-                                            Signup
-                                        </Link>
+                                        : <>
+                                            <Link
+                                                to="/signup"
+                                                className={ `text-base font-medium text-${ mode }-500 bg-${ mode }-700 text-white px-3 py-2 rounded-md text-sm font-medium` }
+                                            >
+                                                Sign up
+                                            </Link>
+                                        </>
                                 }
                             </div>
                             <p className="mt-6 text-center text-base font-medium text-gray-500">

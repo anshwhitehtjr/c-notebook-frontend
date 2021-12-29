@@ -4,7 +4,7 @@ const Alert = ({ alert }) => {
 
     return (
         <>
-            <div style={ { width: '100%', height: '50px' } }>
+            <div className='mb-5' style={ { width: '100%', height: '50px' } }>
                 {
                     alert &&
                     <div className={ `flex bg-${ alert.type }-100 rounded-lg p-4 mb-4 text-sm text-${ alert.type }-700` } role="alert">
