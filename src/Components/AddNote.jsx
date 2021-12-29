@@ -1,6 +1,23 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import appContext from '../Context/appContext';
 
-const AddNote = () => {
+const AddNote = ({ showAlert }) => {
+    const context = useContext(appContext);
+    const { addNote } = context;
+
+    const [note, setNote] = useState({ title: "", desc: "", tag: "" });
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        addNote(note.title, note.desc, note.tag.toLowerCase());
+        setNote({ title: "", desc: "", tag: "" });
+        showAlert("Note added successfully!!!", "green");
+    };
+
+    const onChange = (e) => {
+        setNote({ ...note, [e.target.name]: e.target.value });
+    };
+
     return (
         <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
@@ -32,6 +49,8 @@ const AddNote = () => {
                                             type="text"
                                             name="title"
                                             id="title"
+                                            value={ note.title }
+                                            onChange={ onChange }
                                             className="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="Title Here"
                                         />
@@ -51,6 +70,8 @@ const AddNote = () => {
                                             type="text"
                                             name="tag"
                                             id="tag"
+                                            value={ note.tag }
+                                            onChange={ onChange }
                                             className="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                             placeholder="Tag Here"
                                         />
@@ -66,20 +87,21 @@ const AddNote = () => {
                                     <textarea
                                         id="desc"
                                         name="desc"
-                                        rows={ 3 }
+                                        value={ note.desc }
+                                        onChange={ onChange }
+                                        rows={ 10 }
                                         className="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                                         placeholder="Description"
-                                        defaultValue={ '' }
                                     />
                                 </div>
                                 <p className="mt-2 text-sm text-gray-500">
                                     You can leave the title and tag blank
                                 </p>
                                 <p className="mt-2 text-sm text-gray-500">
-                                    Note: Title will be defaulted to 'untitled'
+                                    Note: Title will be defaulted to "untitled"
                                 </p>
                                 <p className="mt-2 text-sm text-gray-500">
-                                    Note: Tag will be defaulted to 'general'
+                                    Note: Tag will be defaulted to "general"
                                 </p>
                                 <p className="mt-2 text-sm text-gray-500">
                                     you can edit them later
@@ -90,6 +112,7 @@ const AddNote = () => {
                             <button
                                 type="submit"
                                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 mx-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                onClick={ handleClick }
                             >
                                 Add This Note
                             </button>

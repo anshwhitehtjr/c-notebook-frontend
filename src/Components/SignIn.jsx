@@ -17,7 +17,7 @@ export default function SignIn ({ showAlert }) {
         });
         const json = await response.json();
         if (json !== null) {
-            localStorage.setItem('token', json.authtoken);
+            localStorage.setItem('token', json.AUTH_TOKEN);
             history.push("/");
             showAlert("logged in successfully!!!", "green");
         }
