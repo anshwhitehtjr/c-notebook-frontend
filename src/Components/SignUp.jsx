@@ -2,24 +2,23 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-export default function SignIn ({ showAlert }) {
-    const [credentials, setCredentials] = useState({ email: "", password: "" });
+const SignUp = ({ showAlert }) => {
+    const [credentials, setCredentials] = useState({ name: '', email: "", password: "" });
     let history = useHistory();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch("https://cnotebook-backend.herokuapp.com/api/auth/login", {
+        const response = await fetch("https://cnotebook-backend.herokuapp.com/api/auth/createuser", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email: credentials.email, password: credentials.password })
+            body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password })
         });
         const json = await response.json();
         if (json !== null) {
-            localStorage.setItem('token', json.authtoken);
-            history.push("/");
-            showAlert("logged in successfully!!!", "green");
+            history.push("/signin");
+            showAlert("Account Created successfully!!!", "green");
         }
         else {
             showAlert('Internal Server Error!!!', 'red');
@@ -34,13 +33,16 @@ export default function SignIn ({ showAlert }) {
         <section className="flex items-stretch text-gray shadow-lg" style={ { height: '90vh' } }>
             <div className="lg:flex w-1/2 hidden bg-white-500 bg-no-repeat bg-cover relative items-center" style={ { backgroundImage: "url(https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80)" } }>
                 <div className="w-full px-28 z-10 text-white">
-                    <h1 className="text-3xl font-bold text-left tracking-wide">Login To Continue</h1>
-                    <p className="text-xl my-4">Welcome Back!</p>
+                    <h1 className="text-3xl font-bold text-left tracking-wide">Create an Account for free</h1>
+                    <p className="text-xl my-4">Welcome to cNotebook!</p>
                 </div>
             </div>
             <div className="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0 bg-white-900">
                 <div className="w-full py-6 z-20">
                     <form onSubmit={ handleSubmit } className="sm:w-2/3 px-4 lg:px-0 mx-auto">
+                        <div className="pb-2 pt-4">
+                            <input type="text" value={ credentials.name } onChange={ onChange } name="name" id="name" placeholder="Name" className="block w-full p-4 text-lg rounded-sm bg-white" />
+                        </div>
                         <div className="pb-2 pt-4">
                             <input type="email" value={ credentials.email } autoComplete='email' onChange={ onChange } name="email" id="email" placeholder="Email" className="block w-full p-4 text-lg rounded-sm bg-white" />
                         </div>
@@ -48,10 +50,10 @@ export default function SignIn ({ showAlert }) {
                             <input className="block w-full p-4 text-lg rounded-sm bg-white" autoComplete="current-password" value={ credentials.password } onChange={ onChange } type="password" name="password" id="password" placeholder="Password" />
                         </div>
                         <div className="px-4 pb-2 pt-4">
-                            <button className="uppercase block w-full p-4 text-lg rounded-full bg-blue-500 hover:bg-blue-600 text-white focus:outline-none">Sign In</button>
+                            <button className="uppercase block w-full p-4 text-lg rounded-full bg-blue-500 hover:bg-blue-600 text-white focus:outline-none">Create This Account</button>
                         </div>
                         <div className="text-center text-white-400 hover:underline hover:text-white-100">
-                            <Link to="/signup">Don't Have an Account?</Link>
+                            <Link to="/signin">Already have an Account?</Link>
                         </div>
                         <div className="p-4 text-center right-0 left-0 flex justify-center space-x-4 mt-16 lg:hidden ">
                             <a href="#">
@@ -69,4 +71,6 @@ export default function SignIn ({ showAlert }) {
             </div>
         </section>
     );
-}
+};
+
+export default SignUp;

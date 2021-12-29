@@ -11,6 +11,8 @@ import {
   Link
 } from "react-router-dom";
 import SignIn from "./Components/SignIn";
+import SignUp from "./Components/SignUp";
+import AppState from "./Context/AppState";
 
 function App () {
   const [alert, setAlert] = useState(null);
@@ -28,22 +30,27 @@ function App () {
   };
 
   return (
-    <Router>
-      <Navbar mode={ mode } title='cNotebook' />
-      <Alert alert={ alert } />
-      <Switch>
-        <Route exact path='/'>
-          <Home showAlert={ showAlert } />
-        </Route>
-        <Route exact path='/about'>
-          <About showAlert={ showAlert } />
-        </Route>
-        <Route exact path='/signin'>
-          <SignIn showAlert={ showAlert } />
-        </Route>
-      </Switch>
-      <Footer mode={ mode } />
-    </Router>
+    <AppState>
+      <Router>
+        <Navbar mode={ mode } title='cNotebook' />
+        <Alert alert={ alert } />
+        <Switch>
+          <Route exact path='/'>
+            <Home showAlert={ showAlert } />
+          </Route>
+          <Route exact path='/about'>
+            <About showAlert={ showAlert } />
+          </Route>
+          <Route exact path='/signin'>
+            <SignIn showAlert={ showAlert } />
+          </Route>
+          <Route exact path='/signup'>
+            <SignUp showAlert={ showAlert } />
+          </Route>
+        </Switch>
+        <Footer mode={ mode } />
+      </Router>
+    </AppState>
   );
 }
 
