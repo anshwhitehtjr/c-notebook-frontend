@@ -38,6 +38,25 @@ const AddNote = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div className="grid grid-cols-3 gap-6">
+                                <div className="col-span-3 sm:col-span-2">
+                                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                                        Enter the tag of the note here
+                                    </label>
+                                    <div className="mt-1 flex rounded-md shadow-sm">
+                                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                            Tag
+                                        </span>
+                                        <input
+                                            type="text"
+                                            name="tag"
+                                            id="tag"
+                                            className="focus:ring-blue-500 focus:border-blue-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                            placeholder="Tag Here"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
 
                             <div>
                                 <label htmlFor="desc" className="block text-sm font-medium text-gray-700">
@@ -54,7 +73,16 @@ const AddNote = () => {
                                     />
                                 </div>
                                 <p className="mt-2 text-sm text-gray-500">
-                                    You can leave the title blank
+                                    You can leave the title and tag blank
+                                </p>
+                                <p className="mt-2 text-sm text-gray-500">
+                                    Note: Title will be defaulted to 'untitled'
+                                </p>
+                                <p className="mt-2 text-sm text-gray-500">
+                                    Note: Tag will be defaulted to 'general'
+                                </p>
+                                <p className="mt-2 text-sm text-gray-500">
+                                    you can edit them later
                                 </p>
                             </div>
                         </div>
@@ -63,13 +91,13 @@ const AddNote = () => {
                                 type="submit"
                                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 mx-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             >
-                                Save
+                                Add This Note
                             </button>
                             <button
                                 type="button"
                                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 mx-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             >
-                                Clear
+                                Clear the Fields
                             </button>
                         </div>
                     </div>
